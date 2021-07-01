@@ -27,9 +27,10 @@ class TodoController extends Controller
 
     public function update($id, Request $request)
     {
-//        abort(404);
         $todo = Todo::find($id);
         $todo->update($request->all());
+
+        return ['content' => $todo->content];
     }
 
     public function delete($id)

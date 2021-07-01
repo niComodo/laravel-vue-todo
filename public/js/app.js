@@ -1992,8 +1992,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: {
     newTodoContent: String,
-    todos: Array // editTodo: Boolean
-
+    todos: Array
   },
   components: {
     AddTodo: _AddTodo_vue__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2027,7 +2026,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](1);
-                console.log(_context.t0.response); //mostrare e modificare errori
+
+                _this.notify('qualcosa è andato storto', 'danger');
 
               case 11:
                 _this.loading = false; // axios.post('/todo-list', todo).then((r) => { //se success => then: fai qualcosa
@@ -2065,22 +2065,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this2.$set(_this2.todoList, index, clonedItem);
 
-                _context2.next = 16;
+                _context2.next = 15;
                 break;
 
               case 11:
                 _context2.prev = 11;
                 _context2.t0 = _context2["catch"](2);
-                console.log(_context2.t0); //mostrare e modificare errori
-
                 reset();
 
-                _this2.notify('qualcosa è andato stortooooooooo', 'warning');
+                _this2.notify('Qualcosa è andato storto', 'warning');
 
-              case 16:
+              case 15:
                 _this2.loading = false;
 
-              case 17:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -2107,27 +2105,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 response = _context3.sent;
 
-                _this3.todoList.splice(index, 1);
+                _this3.todoList.splice(index, 1); //content dell'item eliminato che mostrerò nel messaggio di notifica
 
-                todoDeleted = response.data.content; //content dell'item eliminato che mostrerò nel messaggio di notifica
+
+                todoDeleted = response.data.content;
 
                 _this3.notify(todoDeleted + ' rimosso correttamente');
 
-                _context3.next = 17;
+                _context3.next = 16;
                 break;
 
               case 12:
                 _context3.prev = 12;
                 _context3.t0 = _context3["catch"](1);
                 item.deleted = false;
-                console.log(_context3.t0.response); //mostrare e modificare errori
 
-                _this3.notify('qualcosa è andato storto', 'danger');
+                _this3.notify('Qualcosa è andato storto', 'danger');
 
-              case 17:
+              case 16:
                 _this3.loading = false;
 
-              case 18:
+              case 17:
               case "end":
                 return _context3.stop();
             }
@@ -4583,7 +4581,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "todo-list" },
-        _vm._l(_vm.todoList, function(item, key) {
+        _vm._l(_vm.todoList, function(item) {
           return _c("TodoItem", {
             directives: [
               {

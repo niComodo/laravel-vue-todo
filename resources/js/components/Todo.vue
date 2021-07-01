@@ -13,7 +13,7 @@
 
         <!--lista todo-->
         <div class="todo-list">
-            <TodoItem v-for="(item, key) in todoList" v-bind:key="item.id"
+            <TodoItem v-for="(item) in todoList" v-bind:key="item.id"
                       v-show="!item.deleted"
                       :item="item"
                       @updateTodo="update"
@@ -51,7 +51,6 @@ export default {
     props: {
         newTodoContent: String,
         todos: Array,
-        // editTodo: Boolean
     },
     components: {
         AddTodo,
@@ -65,9 +64,8 @@ export default {
             try {
                 const response = await axios.post('/todo-list', todo);
                 this.todoList.push(response.data)
-
             } catch (e) {
-                console.log(e.response) //mostrare e modificare errori
+                this.notify('qualcosa è andato storto', 'danger')
             }
             this.loading = false
 
@@ -83,11 +81,9 @@ export default {
                 done()
                 const index = this.findItemIndex(clonedItem)
                 this.$set(this.todoList, index, clonedItem)
-
             } catch (e) {
-                console.log(e) //mostrare e modificare errori
                 reset()
-                this.notify('qualcosa è andato stortooooooooo', 'warning')
+                this.notify('Qualcosa è andato storto', 'warning')
             }
             this.loading = false
         },
@@ -99,13 +95,12 @@ export default {
                 const response = await axios.delete('/todo-list/' + item.id);
                 this.todoList.splice(index, 1)
 
-                let todoDeleted = response.data.content //content dell'item eliminato che mostrerò nel messaggio di notifica
+                //content dell'item eliminato che mostrerò nel messaggio di notifica
+                let todoDeleted = response.data.content
                 this.notify(todoDeleted + ' rimosso correttamente')
-
             } catch (e) {
                 item.deleted = false
-                console.log(e.response) //mostrare e modificare errori
-                this.notify('qualcosa è andato storto', 'danger')
+                this.notify('Qualcosa è andato storto', 'danger')
             }
             this.loading = false
         },
